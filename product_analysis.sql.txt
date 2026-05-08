@@ -1,0 +1,50 @@
+# the total number of products sold by each store along with the store name.
+
+select stores.store_name,sum(order_items.quantity) Total_quantity_sold 
+from order_items join orders using(order_id) 
+join stores using(store_id)
+group by 1;
+
+
+#  the cumulative sum of quantities sold for each product over time.
+
+elect products.product_name,order_items.product_id,orders.order_date,order_items.quantity,
+sum(quantity) over(partition by product_id order by order_date) cumulative_sum
+from orders join order_items using(order_id)
+join products using(product_id);
+
+
+# the product with the highest total sales (quantity * price) for each category.
+
+with a as(select categories.category_name,categories.category_id,
+products.product_name,sum(order_items.quantity*order_items.list_price) Sales
+from categories join  products using(category_id)
+join order_items using(product_id)
+group by 1,2,3)
+select * from (select *, 
+rank()  over(partition by category_id  order by sales desc) rnk from a) b
+where rnk=1 ;
+
+
+
+# the highest-priced product for each category name.
+
+select categories.category_name,max(products.product_name),
+max(products.list_price) from categories 
+join products using (category_id)       
+group by 1;
+
+
+# the top 3 most sold products in terms of quantity.
+
+elect products.product_name,sum(order_items.quantity) QTY from order_items 
+join orders using(order_id)
+join products using(product_id)
+group by 1 order by QTY desc limit 3;
+
+
+# all products that have never been ordered.(use Exists)
+
+select product_id,product_name from products
+where not exists (select product_id from order_items
+where order_items.product_id = products.product_id);

@@ -1,0 +1,16 @@
+# the names of staff members who have not made any sales
+
+select staff_id,concat(first_name," ",last_name) from staffs
+where not exists (select staff_id from orders 
+where orders.staff_id = staffs.staff_id);
+
+# the names of staff members who have made more sales than the average number of sales by all staff members.
+
+with a as(select staffs.staff_id ,
+concat(staffs.first_name," ",staffs.last_name) Full_name,
+coalesce(sum(order_items.quantity*order_items.list_price),0) sales 
+from staffs left join orders using(staff_id)
+left join order_items using(order_id)
+group by 1,2)
+select * from a 
+where sales > (select avg(sales) from a) ;

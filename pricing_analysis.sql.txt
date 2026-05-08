@@ -1,0 +1,13 @@
+# the median value of the price list
+
+with a as (select order_items.list_price,
+row_number() over(order by list_price) Pos,
+count(*) over() n
+ from order_items )
+ select 
+   case 
+        when n % 2 = 0 then (select avg(list_price) from a
+        where pos in ((n/2),(n/2)+1) )
+        else (select avg(list_price) from a 
+        where pos = (n+1)/2 ) end median 
+        from a limit 1 ;

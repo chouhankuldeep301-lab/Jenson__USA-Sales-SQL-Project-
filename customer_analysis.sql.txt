@@ -1,0 +1,28 @@
+# the customer who spent the most money on orders.
+
+select customers.first_name,customers.last_name,
+sum(order_items.quantity*order_items.list_price) sales from customers 
+join orders using(customer_id)
+join order_items using(order_id)
+group by 1,2 order by sales desc limit 1;
+
+
+# the total number of orders placed by each customer per store.
+
+select customers.customer_id,concat(customers.first_name," ",customers.last_name) Full_name,
+stores.store_name,stores.store_id,count(orders.order_id) Total_orders 
+from customers join orders using(customer_id)
+join stores using(store_id)     
+group by 1,2,3,4 order by customers.customer_id;
+
+
+# the customers who have ordered all types of products (i.e., from every category).
+
+select customers.customer_id,concat(customers.first_name," ",customers.last_name),
+count(distinct categories.category_id) from customers 
+join orders using(customer_id) 
+join order_items using(order_id)
+join products using(product_id)
+join categories using(category_id)
+group by 1,2
+order by count(distinct categories.category_id) desc limit 1;
