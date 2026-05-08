@@ -1,0 +1,20 @@
+## Key Insights
+
+* Identified inactive staff members who never handled customer orders, highlighting operational inefficiencies.
+* Discovered top-selling products contributing the highest sales volume and revenue.
+* Detected products with zero orders, indicating inactive inventory and stock optimization opportunities.
+* Calculated median product pricing using SQL window functions for accurate pricing analysis.
+* Analyzed staff sales performance to identify above-average revenue contributors.
+* Identified highly engaged customers purchasing across multiple product categories.
+* Revealed customer purchasing patterns useful for cross-selling and loyalty strategies.
+* Demonstrated business-focused analytical querying using advanced SQL techniques.
+
+## Recommendations
+
+* Improve workload distribution and monitor staff productivity regularly.
+* Introduce incentive programs for high-performing employees.
+* Increase inventory focus on top-selling products to avoid stock shortages.
+* Promote or bundle inactive products to improve sales performance.
+* Use customer purchase behavior for targeted marketing and personalized recommendations.
+* Implement loyalty programs for customers purchasing across multiple categories.
+* Use pricing insights to optimize product segmentation and discount strategies.
